@@ -8,7 +8,7 @@ class SignInForm
     
 
     def user
-        @user ||= User.find_by(email: email)&.authenticate[password]
+        @user ||= User.find_by(email: email)&.authenticate(password)
     end
 
     private
