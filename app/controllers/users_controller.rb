@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
     def show
         @games ||= Game.participant.find_by(user_id: params[user.id])
+        //
     end
 
     private
