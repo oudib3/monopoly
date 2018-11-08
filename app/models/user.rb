@@ -4,5 +4,7 @@ class User < ActiveRecord::Base
     validates :nickname, presence: true
     validates :nickname, uniqueness: true
 
+    has_many :participants
     has_many :games, through: :participants
+    
 end
