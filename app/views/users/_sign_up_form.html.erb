@@ -1,0 +1,19 @@
+<div class="container">
+    <div class='col-md-6 col-md-offset-3'>  
+        <%= form_tag users_path do %>
+            <div class="form_group">
+                <%= label_tag :email, "email", class: 'label' %><br>
+                <%= text_field_tag :email, nil, placeholder: "me@mydomain.com", class: 'form-control' %> <br>
+                <%= label_tag :nickname, "nickname", class: 'label' %><br>
+                <%= text_field_tag :nickname, nil, placeholder: "myN1ckNam3", class: 'form-control' %> <br>
+                <%= label_tag :password, "password", class: 'label' %><br>
+                <%= password_field_tag :password, nil,
+                    placeholder: "Enter a password", class: 'form-control' %> <br>
+                <%= label_tag :password_confirmation, "password confirmation", class: 'label' %><br>
+                <%= password_field_tag :password_confirmation, nil,
+                    placeholder: "Confirm your password", class: 'form-control' %> <br>        
+                <%= submit_tag :submit , class: 'btn btn-success' %>
+            </div>
+        <% end %>
+    </div>
+</div>
