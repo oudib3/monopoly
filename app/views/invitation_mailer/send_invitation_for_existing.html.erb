@@ -1,0 +1,5 @@
+<div class='container-fluid'>
+    <h1> Hello <%= @email%> </h1>
+    <p> U have beem invited to game by <%= User.find_by(email: @inviter.email).nickname %> </p>
+    <p> Click <%= link_to 'here', @url %> if you want to accept invitation </p>
+<div>

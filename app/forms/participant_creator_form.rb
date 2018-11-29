@@ -1,41 +1,31 @@
 class ParticipantCreatorForm
     include ActiveModel::Model
 
-    attr_accessor :player_id, :player_name, :game, :type
+    attr_accessor :email, :game
     
-    validates :game, presence: true
-    validate :player_name_presence
-    validate :player_id_presence
+    validates :game, :email, presence: true
+    validates :email, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
     validate :uniqueness_of_player
     validate :quantity_of_players
 
     def save
         return false unless valid?
-        create_and_add_player_to_game if type == 'input'
-        add_player_to_game(Player.find(player_id)) if type == 'select'
+            if user.present?
+                add_player_to_game(user)
+            else
+                # new_user = User.create(email: email.downcase, nickname: email.match(/(.+)@/)[1])
+                add_player_to_game(new_user)
+            end
         true
     end
 
     private
 
-    def player_name_presence
-        return unless type == 'input'
-        if player_name.nil? || player_name == '' 
-            errors.add(:base, "Please type players name") and return false
-        end      
-    end
-
-    def player_id_presence
-        return unless type == 'select'
-        if player_id.nil? || player_name == ''
-            errors.add(:base, "Please select a player from list") and return false
-        end      
-    end
-
     def uniqueness_of_player
-        if Participant.find_by(game_id: game, player_id: player_id).present?
+        return if !user.present?
+        if Participant.find_by(game_id: game, user_id: user.id).present?
             errors.add(:base, "That player was already added") and return false
-        end   
+        end
     end
 
     def quantity_of_players
@@ -44,12 +34,12 @@ class ParticipantCreatorForm
         end
     end
 
-    def create_and_add_player_to_game
-        new_player = Player.create(name: player_name)
-        add_player_to_game(new_player)
+    def add_player_to_game(player)
+        binding.pry
+        Participant.create(user_id: user.id, game_id: game.id)
     end
 
-    def add_player_to_game(player)
-        Participant.create(player_id: player.id, game_id: game.id)
+    def user
+        @user ||= User.find_by(email: email)
     end
 end

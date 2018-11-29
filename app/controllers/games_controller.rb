@@ -3,9 +3,17 @@ class GamesController < ApplicationController
         @games = Game.all
     end
     
+    def new
+
+    end
+
     def create
-        Game.create()
-        redirect_to games_path
+        @form = GameCreatorForm.new(game_params)
+        if @form.save
+            redirect_to user_path(current_user)
+        else
+            render new_game_path
+        end
     end
 
     # def update
@@ -18,6 +26,9 @@ class GamesController < ApplicationController
     #     end
     # end
 
+    def edit
+        game
+    end
     def destroy
         Game.find(game.id).destroy
         redirect_to games_path
@@ -27,5 +38,9 @@ class GamesController < ApplicationController
 
     def game
         @game ||= Game.find(params[:id])
+    end
+
+    def game_params
+        params.permit(:title).merge(user: current_user)
     end
 end
