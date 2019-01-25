@@ -9,6 +9,13 @@
             <%= submit_tag :submit , class: 'btn btn-success' %><br>
         <% end %>
 
+<<<<<<< HEAD
+    <%= link_to "Back", games_path, class: 'btn btn-primary' %>
+        <%= form_tag game_participants_path do %>
+        <%= hidden_field_tag :type, "select" %>
+        <%= submit_tag :submit , class: 'btn btn-success' %><br>
+    <% end %>
+=======
         <% if @game.participants %>
                 <ul>
                     <% @game.participants.includes(:user).each do |participant| %>
@@ -19,6 +26,7 @@
                     <% end %>
                 </ul>
         <% end %>
+>>>>>>> 0c5cfb71f778bb3960cd38e1a065bcae9b37a7a6
 
         <%= link_to "Start game", games_start_path(@game), method: :put, class: 'btn btn-success' %>
     </div>
