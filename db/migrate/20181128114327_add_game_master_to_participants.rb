@@ -1,5 +1,5 @@
 class AddGameMasterToParticipants < ActiveRecord::Migration[5.1]
   def change
-    add_column :participants, :game_master, :boolean
+    add_column :participants, :game_master, :boolean, default: 'false'
   end
 end

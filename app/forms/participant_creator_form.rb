@@ -35,7 +35,6 @@ class ParticipantCreatorForm
     end
 
     def add_player_to_game(player)
-        binding.pry
         Participant.create(user_id: user.id, game_id: game.id)
     end
 

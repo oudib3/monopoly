@@ -1,7 +1,7 @@
 class InvitationCreatorForm
     include ActiveModel::Model
 
-    attr_accessor :inviter, :email, :game, :token, :session_url, :sign_up_url
+    attr_accessor :inviter, :email, :game, :token, :set_password_url, :sign_up_url
 
     validates :inviter, :email, :game, :token, presence: true
     validates :email, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, presence: true
@@ -21,12 +21,12 @@ class InvitationCreatorForm
     private
 
     def invitation_accepted
-        return unless invitations.any? {|inv| inv.accepted? }
+        return unless invitations.any? { |inv| inv.accepted? }
             errors.add(:base, "user already accepted invitation")
     end
 
     def invitation_pending
-        return unless invitations.any? {|inv| inv.pending? }
+        return unless invitations.any? { |inv| inv.pending? }
             errors.add(:base, "invitation was already sent")
     end
 
@@ -45,7 +45,7 @@ class InvitationCreatorForm
     end
     
     def url
-        [session_url, "token=#{token}"].join('?')
+        [set_password_url, "token=#{token}&email=#{email}"].join('?')
     end
 
     def create_invitation(type)
@@ -57,7 +57,8 @@ class InvitationCreatorForm
                                 email: email,
                                 token: token
                             )
-            # InvitationMailer.send_invitation_for_existing(email, inviter, url).deliver_now
+            Participant.create(game_id: game.id, user_id: user.id)
+            InvitationMailer.send_invitation_for_existing(email, inviter, sign_up_url).deliver_now
 
         when 'not_existing' then 
             new_user = User.create(email: email.downcase, nickname: email.match(/(.+)@/)[1])
@@ -67,9 +68,8 @@ class InvitationCreatorForm
                                 email: email,
                                 token: token
                             )
-            # InvitationMailer.send_invitation_for_not_existing(email, current_user, sign_up_url)
-            #                 .deliver_now
-
+            Participant.create(game_id: game.id, user_id: user.id)
+            InvitationMailer.send_invitation_for_not_existing(email, inviter, url).deliver_now
         else
         end
     end

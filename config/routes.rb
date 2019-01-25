@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   resources :users, only: [:new,:create, :show]
   
   resources :games_start, only: [:update]
+  resource :set_password, only: [:edit, :update]
 end

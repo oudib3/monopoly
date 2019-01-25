@@ -3,20 +3,23 @@
 
    <%= link_to "Back", user_path(current_user), class: 'btn btn-success'%>
    <%= link_to "Invite player", new_game_invitation_path(@game), class: 'btn btn-success'%>
+        
         <% if @game.participants %>
-            <ul>
                 <% @game.participants.includes(:user).each do |participant| %>
-                    <div class="row">
-                        <div style="background-color:#EEE" class="col-md-4 text-justify"><strong><%= participant.user.nickname %></strong></div>
-                        <div class="col-md-1 text-center">
+                        <div class="row">
+                            <div style="background-color:#EEE" class="col-md-4 text-justify">
+                                <strong><%= participant.user.nickname %></strong>
+                            </div>
                             <% if participant[:game_master] == false %>
-                                <%= link_to "Delete", game_participant_path(@game,participant),
-                                method: :delete, class: 'btn btn-danger' %>
+                                <div style="background-color:#EEE" class='col-md-1 text-center'>
+                                    <%= Invitation.where(user_id: participant.user.id, game_id: @game.id).last.status %>
+                                </div>
+                                <div class="col-md-1 text-center">
+                                    <%= link_to "Delete", game_participant_path(@game,participant), method: :delete, class: 'btn btn-danger' %>
+                                </div> 
                             <% end %>
-                        </div> 
-                    </div>
+                        </div>
                 <% end %>
-            </ul>
         <% end %>
     <%= link_to "Start game", game_path, method: :put, class: 'btn btn-success' %>
 </div>

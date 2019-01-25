@@ -29,7 +29,7 @@ RSpec.describe InvitationCreatorForm do
 
     			it "do not saves" do
     				expect(call).to eq false
-    			end 
+    			end
     		end
 
 			context "and declined it" do
@@ -63,7 +63,7 @@ RSpec.describe InvitationCreatorForm do
     end
 
 	context "invitations with invalid email" do
-		let(:params) {{inviter: inviter, email: 'wrongemail.xD', game: game, token: token, session_url: session_url, sign_up_url: sign_up_url}}
+		let(:params) {{inviter: inviter, email: 'wrongemail.xd', game: game, token: token, session_url: session_url, sign_up_url: sign_up_url}}
 
 		it "do not saves" do
 			expect(call).to eq false

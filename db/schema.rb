@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20181129091246) do
   create_table "participants", force: :cascade do |t|
     t.integer "game_id"
     t.integer "user_id"
-    t.boolean "game_master"
+    t.boolean "game_master", default: false
     t.index ["game_id", "user_id"], name: "index_participants_on_game_id_and_user_id", unique: true
     t.index ["game_id"], name: "index_participants_on_game_id"
     t.index ["user_id"], name: "index_participants_on_user_id"

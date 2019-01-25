@@ -8,7 +8,7 @@ class InvitationsController < ApplicationController
     def create
         @form = InvitationCreatorForm.new(invitation_params.merge(token: token))
         if @form.save
-            redirect_to (params[:game_id])
+            redirect_to current_user
         else
             render :new
         end
@@ -21,7 +21,7 @@ class InvitationsController < ApplicationController
 
     def invitation_params
         params.permit(:inviter, :email).merge(game: game,
-                                            session_url: session_url,
+                                            set_password_url: edit_set_password_url,
                                             sign_up_url: new_user_url
                                             )
     end

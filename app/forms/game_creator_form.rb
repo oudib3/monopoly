@@ -4,9 +4,10 @@ class GameCreatorForm
     attr_accessor :title, :user
 
     validates :title, presence: true
+    validate :title_uniqueness
 
     def save
-        return unless valid?
+        return false unless valid?
         create_game
         add_game_master
         true
@@ -23,6 +24,11 @@ class GameCreatorForm
     end
 
     def game_title
-        game_title = "#{user.nickname} - #{title}"
+        game_title = "#{user.nickname}-#{title}"
+    end
+
+    def title_uniqueness
+        return unless user.games.find_by(title: game_title).present?
+        errors.add(:base, "Game with same title already exists")
     end
 end
