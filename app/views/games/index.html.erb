@@ -15,7 +15,7 @@
                             <div class='game-box'> <%= "#{game.id} status: #{game.status}"%>
                                 <div id='game-box-content'>
                                     <p>
-                                        <%= link_to "Manage game", new_game_participant_path(game.id), class: 'btn btn-primary' %>
+                                        <%= link_to "Manage game", new_game_invitation_path(game.id), class: 'btn btn-primary' %>
                                     </p>
                                     
                                     <% if game.participants %>

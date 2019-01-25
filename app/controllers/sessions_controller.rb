@@ -1,5 +1,8 @@
 class SessionsController < ApplicationController
     def new
+        if current_user.present?
+            redirect_to user_path(current_user)
+        end
     end
 
     def create
@@ -10,6 +13,11 @@ class SessionsController < ApplicationController
         else 
             render new_session_path
         end
+    end
+
+    def destroy
+        session.delete(:current_user_id)
+        redirect_to root_path
     end
 
     private

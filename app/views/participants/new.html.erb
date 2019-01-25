@@ -1,31 +1,33 @@
-<div class='container-fluid'>
+<div class='container'>
     <%= render partial: "shared/errors", locals: {instance: @form} %>
+    <div class='col-md-6 col-md-offset-3'>
+        <%= link_to "Back", games_path, class: 'btn btn-primary' %>
+            <%= form_tag game_invitations_path do %>
+            <%= hidden_field_tag 'inviter', "#{@current_user.email}" %> 
+            <%= label_tag :email, "Add new player: ", class: 'label' %> <br>
+            <%= text_field_tag :email, nil, placeholder: "Type email address", class: 'form-control' %> <br>
+            <%= submit_tag :submit , class: 'btn btn-success' %><br>
+        <% end %>
 
+<<<<<<< HEAD
     <%= link_to "Back", games_path, class: 'btn btn-primary' %>
         <%= form_tag game_participants_path do %>
         <%= hidden_field_tag :type, "select" %>
         <%= submit_tag :submit , class: 'btn btn-success' %><br>
     <% end %>
+=======
+        <% if @game.participants %>
+                <ul>
+                    <% @game.participants.includes(:user).each do |participant| %>
+                    <div class="row">
+                        <div style="background-color:#EEE" class="col-md-4 text-justify"><strong><%= participant.user.nickname %></strong></div>
+                        <div class="col-md-1 text-center"><%= link_to "Delete", game_participant_path(@game,participant), method: :delete, class: 'btn btn-danger' %></div>
+                    </div>
+                    <% end %>
+                </ul>
+        <% end %>
+>>>>>>> 0c5cfb71f778bb3960cd38e1a065bcae9b37a7a6
 
-    <% if @game.participants %>
-            <ul>
-                <% @game.participants.includes(:user).each do |participant| %>
-                <div class="row">
-                    <div class="col-md-4 text-justify"><strong><%= participant.player.name %></strong></div>
-                    <div class="col-md-1 text-center"><%= link_to "Delete", game_participant_path(@game,participant), method: :delete, class: 'btn btn-danger' %></div>
-                </div>
-                <% end %>
-            </ul>
-    <% end %>
-
-    <%= form_tag game_participants_path do %>
-        <%= hidden_field_tag :type, "input" %>
-        <%= label_tag :new %><br>
-        <%= text_field_tag :player_name, nil, placeholder: "Name ..."%> <br>
-        <%= submit_tag :submit, class: 'btn btn-success'%><br>
-    <% end %>
-
-    <div class='container-flud'>
         <%= link_to "Start game", games_start_path(@game), method: :put, class: 'btn btn-success' %>
     </div>
 </div>
