@@ -3,6 +3,7 @@ class SignInForm
 
     attr_accessor :email, :password
 
+    validates :email, format: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, presence: true
     validates :email, :password, presence: true
     validate :user_exists
     

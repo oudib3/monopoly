@@ -1,24 +1,27 @@
-<% if @games %>
-    <% @games.each do |game| %>
-        <div class='game-box'> <%= "#{game.id} status: #{game.status}"%>
-            <div id='game-box-content'>
-                <p>
-                    <%= link_to "Manage game", new_game_participant_path(game.id), class: 'btn btn-primary' %>
-                </p>
-                
-                <% if game.participants %>
-                    <ul class='list-group'>
-                        <% game.participants.includes(:user).each do |participant| %>
-                            <li class="list-group-item"><%= participant.user.nickname %></li>
-                        <% end %>
-                    </ul>
-                <% end %>
-                
-                <p class='status'> <%= "#{game.status}" %> </p>
-                <div>
-                    <div class="col-md-1 text-center"><%= link_to "Delete", game_path(game), method: :delete, class: 'btn btn-danger' %></div>
-                </div>                                     
-            </div>
-        </div>
-    <% end %>  
-<% end %>
+<%= render partial: "layouts/navbar" %>
+
+<div class="container-fluid">
+    <div class='col-md-6 col-md-offset-3'>
+        <% if @games %>
+            <% @games.each do |game| %>
+                    <div id='game-box-content'>
+                        <div class='row'>
+                            <div class="col-md-6 text center">
+                                <%= "<id: #{game.id} >"%> <br>
+                                <%= game.title %>
+                            </div>
+                            <div class="col-md-6 text center">
+                                <%= link_to "Manage game", edit_game_path(game.id), class: 'btn btn-primary' %>
+                            </div>
+                            <div class="col-md-1 text-center"><%= link_to "Delete", game_path(game),
+                                method: :delete, class: 'btn btn-danger' %></div>    
+                            </div>
+                        </div>
+                        <p class='status'> <%= "#{game.status}" %> </p>                                
+                    </div>
+                </div>
+            <% end %>  
+        <% end %>
+        <div><%= link_to "New game", new_game_path, class: 'btn btn-primary' %></div>
+    </div>
+</div>
