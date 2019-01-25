@@ -20,8 +20,8 @@
                                     
                                     <% if game.participants %>
                                         <ul class='list-group'>
-                                            <% game.participants.includes(:player).each do |participant| %>
-                                                <li class="list-group-item"><%= participant.player.name %></li>
+                                            <% game.participants.includes(:user).each do |participant| %>
+                                                <li class="list-group-item"><%= participant.user.nickname %></li>
                                             <% end %>
                                         </ul>
                                     <% end %>
