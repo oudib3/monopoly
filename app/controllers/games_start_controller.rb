@@ -1,7 +1,6 @@
 class GamesStartController< ApplicationController
     def update
         @form = GameStarterForm.new(game: game)
-        binding.pry
         if @form.valid?
             @form.start
             redirect_to games_path
