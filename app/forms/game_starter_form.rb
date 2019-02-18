@@ -6,11 +6,8 @@ class GameStarterForm
     validate :quantity_of_players
     validate :not_started
 
-    def save
-        binding.pry
-        return false unless valid?
+    def start
         game.in_progress!
-        true
     end
 
     private
@@ -28,5 +25,4 @@ class GameStarterForm
             errors.add(:base, "At least 2 players are needed to start the game") and return false
         end
     end
-
 end

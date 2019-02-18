@@ -3,9 +3,7 @@
 
     <%= link_to "Back", games_path, class: 'btn btn-primary' %>
         <%= form_tag game_participants_path do %>
-        <%= hidden_field_tag :type, "select" %> 
-        <%= label_tag :Choose %> <br>
-        <%= select_tag :player_id, options_for_select(User.all.map { |p| [p.name, p.id] }) %> <br>
+        <%= hidden_field_tag :type, "select" %>
         <%= submit_tag :submit , class: 'btn btn-success' %><br>
     <% end %>
 
@@ -13,7 +11,7 @@
             <ul>
                 <% @game.participants.includes(:user).each do |participant| %>
                 <div class="row">
-                    <div class="col-md-4 text-justify"><strong><%= participant.player.name %></strong></div>
+                    <div class="col-md-4 text-justify"><strong><%= participant.user.nickname %></strong></div>
                     <div class="col-md-1 text-center"><%= link_to "Delete", game_participant_path(@game,participant), method: :delete, class: 'btn btn-danger' %></div>
                 </div>
                 <% end %>

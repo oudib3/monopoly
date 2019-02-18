@@ -2,20 +2,34 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/">Monopol</a>
         </div>
-        
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="games">Games</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <%= link_to new_user_path do %> 
-                    <span class="glyphicon glyphicon-user">Sign Up</span>
-                <% end %>
-            </li>
-            <li>
-                <%= link_to new_session_path do %> 
-                    <span class="glyphicon glyphicon-user">Sign In</span>
-                <% end %>
-            </li>
-        </ul>
+
+        <% if current_user.present? %>
+            <ul class="nav navbar-nav">
+                <li>
+                    <%= link_to user_path(current_user) do %>
+                        <span class="glyphicon glyphicon-ok">Games</span>
+                    <% end %>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <%= link_to sessions_path, method: :delete do %> 
+                         <span class="glyphicon glyphicon-user">Log out</span>
+                    <% end %>
+                </li>
+            </ul>
+        <% else %>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <%= link_to new_user_path do %> 
+                        <span class="glyphicon glyphicon-user">Sign Up</span>
+                    <% end %>
+                </li>
+                <li>
+                    <%= link_to new_session_path do %> 
+                        <span class="glyphicon glyphicon-user">Sign In</span>
+                    <% end %>
+                </li>
+            </ul>
+        <% end %>
 </nav>

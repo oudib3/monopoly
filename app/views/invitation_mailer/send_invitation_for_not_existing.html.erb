@@ -1,0 +1,8 @@
+<div class='container-fluid'>
+    <h1> Hello <%= @email %> </h1>
+    <p> U have beem invited to game by <%= User.find_by(email: @inviter).nickname %> </p>
+    <p> But it seems that you are not registered on our site</p>
+    <p> We have created account for you, just click link below to set it up. </p>
+    
+    <p><%= link_to 'SIGN UP', @url %></p>
+</div>

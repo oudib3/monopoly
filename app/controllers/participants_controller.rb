@@ -1,6 +1,7 @@
 class ParticipantsController < ApplicationController
     def new
         game
+        current_user
     end
 
     def create
@@ -19,7 +20,7 @@ class ParticipantsController < ApplicationController
 
     private
     def participant_params
-        params.permit(:player_name, :player_id, :type).merge!(game: game)
+        params.permit(:email).merge!(game: game)
     end
     
     def game
