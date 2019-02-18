@@ -6,6 +6,7 @@ class SetPasswordsController < ApplicationController
 
     def update
         @form = SetPasswordsForm.new(invitation_params)
+        binding.pry
         if @form.save
             redirect_to new_session_path, notice: "password succesfull"
         else
@@ -19,11 +20,9 @@ class SetPasswordsController < ApplicationController
         @user ||= User.find_by(email: params[:email])
     end
 
-    def token
-        @token ||= params[:token]
-    end
-
     def invitation_params
-        params.permit(:password,:password_confirmation).merge
+        params.permit(:password,:password_confirmation, :token).merge(user: user)
     end 
+
+
 end

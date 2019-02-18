@@ -10,12 +10,15 @@
                                 <%= "<id: #{game.id} >"%> <br>
                                 <%= game.title %>
                             </div>
-                            <div class="col-md-6 text center">
-                                <%= link_to "Manage game", edit_game_path(game.id), class: 'btn btn-primary' %>
-                            </div>
-                            <div class="col-md-1 text-center"><%= link_to "Delete", game_path(game),
-                                method: :delete, class: 'btn btn-danger' %></div>    
-                            </div>
+                            <% if Participant.find_by(user_id: current_user.id, game_id: game.id).game_master == true %>
+                            <% binding.pry %>
+                                <div class="col-md-6 text center">
+                                    <%= link_to "Manage game", edit_game_path(game.id), class: 'btn btn-primary' %>
+                                </div>
+                                <div class="col-md-1 text-center"><%= link_to "Delete", game_path(game),
+                                    method: :delete, class: 'btn btn-danger' %></div>    
+                                </div>
+                            <% end %>
                         </div>
                         <p class='status'> <%= "#{game.status}" %> </p>                                
                     </div>
