@@ -6,7 +6,6 @@ class SetPasswordsController < ApplicationController
 
     def update
         @form = SetPasswordsForm.new(invitation_params)
-        binding.pry
         if @form.save
             redirect_to new_session_path, notice: "password succesfull"
         else
